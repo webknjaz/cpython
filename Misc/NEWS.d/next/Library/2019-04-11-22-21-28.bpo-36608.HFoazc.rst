@@ -1,0 +1,1 @@
+Replace vendoring of pip and setuptools blobs in the CPython Git tree with a download and caching mechanism.
