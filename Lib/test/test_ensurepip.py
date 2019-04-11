@@ -13,7 +13,8 @@ import ensurepip._uninstall
 class TestEnsurePipVersion(unittest.TestCase):
 
     def test_returns_version(self):
-        self.assertEqual(ensurepip._PIP_VERSION, ensurepip.version())
+        pip_url = next(u for u in ensurepip._PROJECT_URLS if '/pip-' in u)
+        self.assertIn(f'/pip-{ensurepip.version()}-', pip_url)
 
 class EnsurepipMixin:
 
@@ -147,7 +148,7 @@ class TestBootstrap(EnsurepipMixin, unittest.TestCase):
         self.assertEqual(self.os_environ["PIP_CONFIG_FILE"], os.devnull)
 
 @contextlib.contextmanager
-def fake_pip(version=ensurepip._PIP_VERSION):
+def fake_pip(version=ensurepip.version()):
     if version is None:
         pip = None
     else:
@@ -243,7 +244,7 @@ class TestUninstall(EnsurepipMixin, unittest.TestCase):
 
 # Basic testing of the main functions and their argument parsing
 
-EXPECTED_VERSION_OUTPUT = "pip " + ensurepip._PIP_VERSION
+EXPECTED_VERSION_OUTPUT = "pip " + ensurepip.version()
 
 class TestBootstrappingMainFunction(EnsurepipMixin, unittest.TestCase):
 
