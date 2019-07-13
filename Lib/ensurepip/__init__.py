@@ -11,16 +11,13 @@ import tempfile
 
 from ._bundler import (
     _ensure_wheels_are_downloaded,
+    _generate_project_name_version_pairs,
     _get_name_and_url,
     _PROJECT_URLS,
 )
 
 
 __all__ = ("version", "bootstrap")
-
-
-def _get_name_and_version(url):
-    return tuple(_get_name_and_url(url)[0].split('-')[:2])
 
 
 def _run_pip(args, additional_paths=None):
@@ -39,9 +36,7 @@ def version():
     """
     try:
         return next(
-            v for n, v in (
-                _get_name_and_version(pu) for pu in _PROJECT_URLS
-            )
+            v for n, v in _generate_project_name_version_pairs()
             if n == 'pip'
         )
     except StopIteration:
@@ -133,7 +128,7 @@ def _bootstrap(*, root=None, upgrade=False, user=False,
         if verbosity:
             args += ["-" + "v" * verbosity]
 
-        wheels_specs = map(_get_name_and_version, _PROJECT_URLS)
+        wheels_specs = _generate_project_name_version_pairs()
         return _run_pip(args + [p[0] for p in wheels_specs], additional_paths)
 
 def _uninstall_helper(*, verbosity=0):
@@ -164,7 +159,7 @@ def _uninstall_helper(*, verbosity=0):
     if verbosity:
         args += ["-" + "v" * verbosity]
 
-    wheels_specs = map(_get_name_and_version, _PROJECT_URLS)
+    wheels_specs = _generate_project_name_version_pairs()
     return _run_pip(args + [p[0] for p in reversed(tuple(wheels_specs))])
 
 

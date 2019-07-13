@@ -20,6 +20,14 @@ _PROJECT_URLS = (
 )
 
 
+def _get_name_and_version(url):
+    return tuple(_get_name_and_url(url)[0].split('-')[:2])
+
+
+def _generate_project_name_version_pairs():
+    return (_get_name_and_version(pu) for pu in _PROJECT_URLS)
+
+
 def _ensure_wheels_are_downloaded(*, verbosity=0):
     """Download wheels into bundle if they are not there yet."""
     with importlib.resources.path('ensurepip', '_bundled') as bundled_dir:
