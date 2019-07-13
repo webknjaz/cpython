@@ -1,7 +1,11 @@
+import importlib.resources
 import os
 import os.path
+import pathlib
+import shutil
 import sys
 import tempfile
+
 
 from ._bundler import (
     _ensure_wheels_are_downloaded,
@@ -78,10 +82,6 @@ def _bootstrap(*, root=None, upgrade=False, user=False,
 
     Note that calling this function will alter both sys.path and os.environ.
     """
-    import importlib.resources
-    import pathlib
-    import shutil
-
     if altinstall and default_pip:
         raise ValueError("Cannot use altinstall and default_pip together")
 
