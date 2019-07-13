@@ -1,3 +1,5 @@
+"""Bundled Pip installer."""
+
 import importlib.resources
 import os
 import os.path
