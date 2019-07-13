@@ -10,7 +10,7 @@ from ._bundler import (
 )
 
 
-__all__ = ["version", "bootstrap"]
+__all__ = ("version", "bootstrap")
 
 
 def _get_name_and_version(url):
