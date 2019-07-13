@@ -10,7 +10,6 @@ import tempfile
 
 
 from ._bundler import (
-    _ensure_wheels_are_downloaded,
     _generate_project_name_version_pairs,
     _get_name_and_url,
     _PROJECT_URLS,
@@ -96,9 +95,6 @@ def _bootstrap(*, root=None, upgrade=False, user=False,
     elif not default_pip:
         # omit pip and easy_install
         os.environ["ENSUREPIP_OPTIONS"] = "install"
-
-    # Ensure that the downloaded wheels are there
-    _ensure_wheels_are_downloaded(verbosity=verbosity)
 
     with tempfile.TemporaryDirectory() as tmpdir:
         # Put our bundled wheels into a temporary directory and construct the
