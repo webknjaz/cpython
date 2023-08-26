@@ -1,0 +1,1 @@
+Replaced vendoring of pip blob in the CPython Git tree with a download and caching mechanism.
